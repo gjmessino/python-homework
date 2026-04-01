@@ -72,8 +72,29 @@ def titleize(title):
     return new_title.join()
 #Task 9: Hangman, with more String Operations
 def hangman(secret, guess):
-    count = len(secret)
     new_secret = ""
-    for i in range (count):
-        new_secret+= "_"
-    
+    for i in range (len(secret)):
+        for k in range(len(guess)):
+            if guess[k] == secret[i]:
+                new_secret += guess[k]
+            else:
+                new_secret += "_"
+    return new_secret
+# Task 10: Pig Latin, Another String Manipulation Exercise
+def igpay_atinlay(phrase):
+    phrase.split()
+    new_phrase = ""
+    for words in phrase:
+        if words[0] == "a" or "e" or "i" or "o" or "u":
+            words.append("ay")
+        elif words[0] == "q" and words[1] == "u":
+            words.slice(2)
+            words.append("qu")
+            words.append("ay")
+        else:
+            first = words [0]
+            words.slice(1)
+            words.append(first)
+            words.append("ay")
+        new_phrase += words
+    return new_phrase

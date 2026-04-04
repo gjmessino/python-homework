@@ -106,20 +106,19 @@ def hangman(secret, guess):
     return new_secret
 # Task 10: Pig Latin, Another String Manipulation Exercise
 def pig_latin(phrase):
-    phrase.split()
-    new_phrase = ""
-    for words in phrase:
+    sequence = phrase.split()
+    new_phrase = []
+    for words in sequence:
         if words[0] == "a" or "e" or "i" or "o" or "u":
-            words.append("ay")
+            new_phrase.append(words + "ay")
         elif words[0] == "q" and words[1] == "u":
-            words.slice(2)
-            words.append("qu")
-            words.append("ay")
+            new_phrase.append(words.slice(2) + "quay")
         else:
+            new_word = ""
             while (words[0] != "a" or "e" or "i" or "o" or "u"):
-                first = words [0]
-                words.slice(1)
-                words.append(first)
+                start += words [0]
+                new_word = words.slice(1)
             words.append("ay")
+            new_phrase.append(new_word + start + "ay")
         new_phrase += words
     return new_phrase

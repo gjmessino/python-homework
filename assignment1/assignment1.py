@@ -115,7 +115,7 @@ def pig_latin(phrase):
         for word in phrase2:
             if word.find("qu") == 0:
                 final.append(word[2:] + "quay")
-            elif:
+            elif vowels.find(word[0]) != -1:
                 for letter in vowels:
                     if word.find(letter) == 0:
                         final.append(word + "ay")

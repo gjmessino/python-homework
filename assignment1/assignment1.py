@@ -98,6 +98,33 @@ def titleize(title):
     return ' '.join(new_title)
 #Task 9: Hangman, with more String Operations
 def hangman(secret, guess):
-
+    new_word = ""
+    for i in len(secret):
+        ind = guess.find(secret[i])
+        if ind != -1:
+            new_word += secret[i]
+        else:
+            new_word += "_"
+    return new_word
 # Task 10: Pig Latin, Another String Manipulation Exercise
 def pig_latin(phrase):
+    try:
+        phrase2 = phrase.split()
+        final = []
+        vowels = "aeiou"
+        for word in phrase2:
+            if word.find("qu") == 0:
+                final.append(word[2:] + "quay")
+            elif:
+                for letter in vowels:
+                    if word.find(letter) == 0:
+                        final.append(word + "ay")
+            else:
+                start = ""
+                for letter in word:
+                    if vowels.find(letter) != -1:
+                        start+= letter
+                final.append(word[len(start)-1:] + start + "ay")
+        return final.join()
+    except:
+        print("Please input a string")

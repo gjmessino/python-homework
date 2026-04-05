@@ -25,33 +25,23 @@ def calc (num1, num2, operator = "multiply"):
                 return num1//num2
             except ZeroDivisionError:
                 return("You can't divide by 0!")
-        else:
-            return int(num1/num2)
     except Exception:
         return("You can't multiply those values!")
 
 # Task 4: Data Type Conversion
 def data_type_conversion(val,name):
-    if name == "str":
-        try:
-            new_data = str(val)
-            return new_data
-        except TypeError:
+    try:
+        if name == "str":
+                new_data = str(val)
+                return new_data
+        elif name == "float":
+                new_data = float(val)
+                return new_data
+        elif name == "int":
+                new_data = int(val)
+                return new_data
+    except:
             return(f"You can not turn {name} into {val}")
-    elif name == "float":
-        try:
-            new_data = float(val)
-            return new_data
-        except TypeError:
-            return(f"You can not turn {name} into {val}")
-    elif name == "int":
-        try:
-            new_data = int(val)
-            return new_data
-        except TypeError:
-            return(f"You can not turn {name} into {val}")
-    else:
-        return
 # Task 5: Grading System, Using *args
 def grade(*args):
     try:
@@ -89,17 +79,18 @@ def student_scores(posit, **kwargs):
 #Task 8: Titleize, with String and List Operations
 def titleize(title):
     new_title =[]
-    title.split()
-    for word in title:
-        word = word.capitalize()
-        if word == "a" or "on" or "an" or "the" or "of" or "and" or "is" or "in":
-            word.lower()
-        new_title.append(word)
+    title1 = title.split()
+    little_words = ["a", "on", "an", "the", "of", "and", "is", "in"]
+    for word in title1:
+        word1 = word.capitalize()
+        if little_words.index[word] != -1:
+            word1 = word.lower()
+        new_title.append(word1)
     return ' '.join(new_title)
 #Task 9: Hangman, with more String Operations
 def hangman(secret, guess):
     new_word = ""
-    for i in len(secret):
+    for i in range(len(secret)):
         ind = guess.find(secret[i])
         if ind != -1:
             new_word += secret[i]
@@ -113,18 +104,17 @@ def pig_latin(phrase):
         final = []
         vowels = "aeiou"
         for word in phrase2:
-            if word.find("qu") == 0:
-                final.append(word[2:] + "quay")
-            elif vowels.find(word[0]) != -1:
-                for letter in vowels:
-                    if word.find(letter) == 0:
-                        final.append(word + "ay")
+            if word[0] in vowels:
+                final.append(word + "ay")
+            elif word[0] == "q" and word [1] == "u":
+                final.append(word[2:] + "ay")
             else:
                 start = ""
-                for letter in word:
-                    if vowels.find(letter) != -1:
-                        start+= letter
-                final.append(word[len(start)-1:] + start + "ay")
-        return final.join()
+                i = 0
+                while i < len(word) and word[i] not in vowels:
+                    start += word[i]
+                    i += 1
+                final.append(word[i:] + start + "ay")
+        return ''.join(final)
     except:
         print("Please input a string")

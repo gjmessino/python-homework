@@ -1,5 +1,6 @@
-import os
+#import os
 import custom_module
+import csv
 
 # Task 1: Diary
 def diary():
@@ -17,8 +18,6 @@ def diary():
         return
 
 # Task 2: Read a CSV File
-import csv
-
 def read_employees():
     try:
         my_dict = {}

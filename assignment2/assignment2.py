@@ -1,18 +1,19 @@
-#import os
+import os
 import custom_module
 import csv
+from datetime import datetime
 
 # Task 1: Diary
 def diary():
     try:
         with open('diary.txt', 'a') as file:
-            file.append(input("What happened today?"))
-            done = False
-            while done == False:
-                new_line = file.append(input("What else?"))
+            file.write(input("What happened today? "))
+            not_done = True
+            while not_done:
+                new_line = file.write(input("What else? "))
                 if new_line == "done for now":
-                    done == True
                     file.close()
+                    not_done == False
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
@@ -22,7 +23,7 @@ def read_employees():
     try:
         my_dict = {}
         my_list = []
-        with open('../csv/employees.csv', 'r') as file:
+        with open('csv/employees.csv', 'r') as file:
             reader = csv.reader(file)
             my_dict['field'] = next(reader)
             for row in reader:
@@ -32,24 +33,62 @@ def read_employees():
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
-
 employees = read_employees()
-print(employees)
 
 # Task 3: Find the Column Index
-def column_index(first_name):
-    employees = read_employees()
+def column_index(col):
     try:
-        return employees["fields"].index("first_name")
+        return employees["field"].index(col)
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
+employee_id_column = column_index('employee_id')
 
 # Task 4: Find the Employee First Name
-#def first_name(num):
+def first_name(num_row):
+    col_ind = column_index('first_name')
+    row = employees['rows'][num_row]
+    return row[col_ind]
+
+# Task 5: Find the Employee: a Function in a Function
+def employee_find(employee_id):
+    def employee_match(row):
+        return int(row[employee_id_column]) == employee_id
+    matches = list(filter(employee_match, employees["rows"]))
+    return matches
+
+#Task 6: Find the Employee with a Lambda
+def employee_find_2(employee_id):
+   matches = list(filter(lambda row : int(row[employee_id_column]) == employee_id , employees["rows"]))
+   return matches
+
+#Task 7: Sort the Rows by last_name Using a Lambda
+def sort_by_last_name():
+    last_name_column = column_index('last_name')
+    sort_list = employees["rows"].sort(key = lambda row : row[last_name_column])
+    return sort_list
+
+#Task 8: Create a dict for an Employee
+def employee_dict(row):
+    key_list = employees['field']
+    val_list = []
+    for item in row:
+        val_list.append(item)
+    my_dict = zip(key_list, val_list)
+    return my_dict
+
+# Task 9: A dict of dicts, for All Employees
+def all_employees_dict():
+    emp_dicts = {}
+    for i in range(19):
+        emp_dicts[i+1] = employee_dict(employees['rows'][i])
+        print(tuple(emp_dicts[i+1]))
+    return emp_dicts
 
 # Task 10: Use the os Module
-#def get_this_value():
+def get_this_value():
+    val = os.getenv('THISVALUE')
+    return val
 
 # Task 11: Creating Your Own Module
 def set_that_secret(secret):
@@ -60,17 +99,33 @@ def set_that_secret(secret):
 
 # Task 12: Read minutes1.csv and minutes2.csv
 def read_minutes():
-    minutes1 = make_dict('minutes1')
-    minutes2 = make_dict('minutes2')
-    return minutes1, minutes2
-def make_dict(dict_name):
-    my_list = []
-    my_dict = {}
-    with open ('../csv/{dict_name}.csv', r) as file:
-        reader = csv.reader(file)
-        my_dict['field'] = next(reader)
-        for row in reader:
-            my_list.append(row)
-        my_dict['rows'] = my_list
+    def file_read(minutes):
+        with open (minutes, 'r') as file:
+            mins = {}
+            min_list = []
+            reader = csv.reader(file)
+            mins['field'] = next(reader)
+            for row in reader:
+                min_list.append(tuple(row))
         file.close()
-    return my_dict
+        mins['rows'] = min_list
+        return mins
+    min1 = file_read('csv/minutes1.csv')
+    min2 = file_read('csv/minutes2.csv')
+    return min1, min2
+
+# Task 13: Create minutes_set
+def create_minutes_set():
+    a,b = read_minutes()
+    aset = set(a)
+    bset = set(b)
+    combo = aset.union(bset)
+    return combo
+minutes_set = create_minutes_set()
+
+# Task 14: Convert to datetime
+def create_minutes_list():
+    min_list = list(create_minutes_set)
+
+# Task 15: Write Out Sorted List
+def write_sorted_list():

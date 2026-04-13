@@ -107,8 +107,8 @@ def read_minutes():
             mins['field'] = next(reader)
             for row in reader:
                 min_list.append(tuple(row))
+            mins['rows'] = min_list
         file.close()
-        mins['rows'] = min_list
         return mins
     min1 = file_read('csv/minutes1.csv')
     min2 = file_read('csv/minutes2.csv')
@@ -117,15 +117,24 @@ def read_minutes():
 # Task 13: Create minutes_set
 def create_minutes_set():
     a,b = read_minutes()
-    aset = set(a)
-    bset = set(b)
+    def make_set(my_dict, my_set = set()):
+        for row in my_dict:
+            my_set.add(row)
+        return my_set
+    aset = make_set(a)
+    bset = make_set(b)
     combo = aset.union(bset)
     return combo
 minutes_set = create_minutes_set()
+print(minutes_set)
 
 # Task 14: Convert to datetime
 def create_minutes_list():
     min_list = list(create_minutes_set)
+    times = min_list[1:]
+    return map(lambda times: tuple(datetime.strptime(times, "%B %d, %Y")))
+minutes_list = create_minutes_list()
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():
+    my_list = minutes_list.sort()

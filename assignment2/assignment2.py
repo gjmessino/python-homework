@@ -7,13 +7,16 @@ from datetime import datetime
 def diary():
     try:
         with open('diary.txt', 'a') as file:
-            file.write(input("What happened today? "))
+            first = input("What happened today? ")
+            file.write(first + "/n")
             not_done = True
             while not_done:
-                new_line = file.write(input("What else? "))
+                new_line = input("What else? ")
+                file.write(new_line)
                 if new_line == "done for now":
+                    file.write(new_line = "/n")
                     file.close()
-                    not_done == False
+                    not_done = False
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
@@ -25,7 +28,7 @@ def read_employees():
         my_list = []
         with open('csv/employees.csv', 'r') as file:
             reader = csv.reader(file)
-            my_dict['field'] = next(reader)
+            my_dict['fields'] = next(reader)
             for row in reader:
                 my_list.append(row)
             my_dict['rows'] = my_list
@@ -38,7 +41,7 @@ employees = read_employees()
 # Task 3: Find the Column Index
 def column_index(col):
     try:
-        return employees["field"].index(col)
+        return employees["fields"].index(col)
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
@@ -65,8 +68,8 @@ def employee_find_2(employee_id):
 #Task 7: Sort the Rows by last_name Using a Lambda
 def sort_by_last_name():
     last_name_column = column_index('last_name')
-    sort_list = employees["rows"].sort(key = lambda row : row[last_name_column])
-    return sort_list
+    employees["rows"].sort(key = lambda row : row[last_name_column])
+    return employees['rows']
 
 #Task 8: Create a dict for an Employee
 def employee_dict(row):
@@ -74,13 +77,15 @@ def employee_dict(row):
     val_list = []
     for item in row:
         val_list.append(item)
-    my_dict = zip(key_list, val_list)
+    my_zip = zip(key_list, val_list)
+    my_dict = dict(my_zip)
+    del my_dict['employee_id']
     return my_dict
 
 # Task 9: A dict of dicts, for All Employees
 def all_employees_dict():
     emp_dicts = {}
-    for i in range(19):
+    for i in range(20):
         emp_dicts[i+1] = employee_dict(employees['rows'][i])
         print(tuple(emp_dicts[i+1]))
     return emp_dicts
@@ -93,8 +98,6 @@ def get_this_value():
 # Task 11: Creating Your Own Module
 def set_that_secret(secret):
     sec = custom_module.set_secret(secret)
-    print(sec)
-    sec = custom_module.set_secret('AppleSauce')
     print(sec)
 
 # Task 12: Read minutes1.csv and minutes2.csv
@@ -121,19 +124,20 @@ def create_minutes_set():
         for row in my_dict:
             my_set.add(row)
         return my_set
-    aset = make_set(a)
-    bset = make_set(b)
+    aset = make_set(a['rows'])
+    bset = make_set(b['rows'])
     combo = aset.union(bset)
     return combo
 minutes_set = create_minutes_set()
-print(minutes_set)
 
 # Task 14: Convert to datetime
 def create_minutes_list():
-    min_list = list(create_minutes_set)
-    times = min_list[1:]
-    return map(lambda times: tuple(datetime.strptime(times, "%B %d, %Y")))
+    times = []
+    for item in minutes_set:
+        times.append(item[1])
+    return map(times, lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")))
 minutes_list = create_minutes_list()
+print(minutes_list)
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():

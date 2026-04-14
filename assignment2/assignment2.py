@@ -134,11 +134,18 @@ minutes_set = create_minutes_set()
 def create_minutes_list():
     times = []
     for item in minutes_set:
-        times.append(item[1])
-    return map(times, lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y")))
+        times.append(str(item[1]))
+    my_list = map((lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y"))), (times))
+    return my_list
 minutes_list = create_minutes_list()
 print(minutes_list)
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():
-    my_list = minutes_list.sort()
+    my_list = map((lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y"))), (minutes_list))
+    with open('./minutes.csv', 'w') as file:
+        writer = csv.writer(file)
+        writer.writerow('Name,Date')
+        for line in my_list:
+            writer.writerow(line)
+    file.close()

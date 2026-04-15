@@ -8,14 +8,13 @@ def diary():
     try:
         with open('diary.txt', 'a') as file:
             first = input("What happened today? ")
-            file.write(first + "/n")
+            file.write(first + "\n")
             not_done = True
             while not_done:
                 new_line = input("What else? ")
                 file.write(new_line)
                 if new_line == "done for now":
-                    file.write(new_line = "/n")
-                    file.close()
+                    file.write(new_line + "\n")
                     not_done = False
     except Exception as e:
         print(f"An exception has occured. {e}")
@@ -107,11 +106,10 @@ def read_minutes():
             mins = {}
             min_list = []
             reader = csv.reader(file)
-            mins['field'] = next(reader)
+            mins['fields'] = next(reader)
             for row in reader:
                 min_list.append(tuple(row))
             mins['rows'] = min_list
-        file.close()
         return mins
     min1 = file_read('csv/minutes1.csv')
     min2 = file_read('csv/minutes2.csv')
@@ -132,20 +130,17 @@ minutes_set = create_minutes_set()
 
 # Task 14: Convert to datetime
 def create_minutes_list():
-    times = []
-    for item in minutes_set:
-        times.append(str(item[1]))
-    my_list = map((lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y"))), (times))
+    my_list = list(map((lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y"))), (minutes_set)))
     return my_list
 minutes_list = create_minutes_list()
-print(minutes_list)
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():
-    my_list = map((lambda x: (x[0], datetime.strptime(x[1], "%B %d, %Y"))), (minutes_list))
+    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%B %d, %Y"))), (minutes_list)))
+    sorted_list = sorted(my_list, key = lambda x : x[1])
     with open('./minutes.csv', 'w') as file:
         writer = csv.writer(file)
-        writer.writerow('Name,Date')
-        for line in my_list:
+        writer.writerow(['Name', 'Date'])
+        for line in sorted_list:
             writer.writerow(line)
-    file.close()
+write_sorted_list()

@@ -8,13 +8,14 @@ def diary():
     try:
         with open('diary.txt', 'a') as file:
             first = input("What happened today? ")
-            file.write(first + "\n")
+            writer = csv.writer(file)
+            writer.writerow(first)
             not_done = True
             while not_done:
                 new_line = input("What else? ")
-                file.write(new_line)
+                writer.writerow(new_line)
                 if new_line == "done for now":
-                    file.write(new_line + "\n")
+                    writer.writerow(new_line)
                     not_done = False
     except Exception as e:
         print(f"An exception has occured. {e}")
@@ -86,9 +87,9 @@ def employee_dict(row):
 def all_employees_dict():
     emp_dicts = {}
     ind = column_index('employee_id')
-    id_list = list(employees['rows'][ind])
-    for item in id_list:
-        emp_dicts[item] = tuple(employee_dict(employees['rows'][item]))
+    for item in employees['rows']:
+        id = item[ind]
+        emp_dicts[id] = tuple(employee_dict(employees['rows'][item]))
     return emp_dicts
 
 # Task 10: Use the os Module
@@ -139,7 +140,7 @@ minutes_list = create_minutes_list()
 # Task 15: Write Out Sorted List
 def write_sorted_list():
     sorted_list = sorted(minutes_list, key = lambda x : x[1])
-    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%Y-%m-%d"))), (sorted_list)))
+    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%B %d, %Y"))), (sorted_list)))
     with open('./minutes.csv', 'w') as file:
         writer = csv.writer(file)
         writer.writerow(['Name', 'Date'])

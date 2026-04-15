@@ -19,6 +19,7 @@ def diary():
     except Exception as e:
         print(f"An exception has occured. {e}")
         return
+diary()
 
 # Task 2: Read a CSV File
 def read_employees():
@@ -72,7 +73,7 @@ def sort_by_last_name():
 
 #Task 8: Create a dict for an Employee
 def employee_dict(row):
-    key_list = employees['field']
+    key_list = employees['fields']
     val_list = []
     for item in row:
         val_list.append(item)
@@ -85,7 +86,7 @@ def employee_dict(row):
 def all_employees_dict():
     emp_dicts = {}
     ind = column_index('employee_id')
-    id_list = list(employees['fields'][ind])
+    id_list = list(employees['rows'][ind])
     for item in id_list:
         emp_dicts[item] = tuple(employee_dict(employees['rows'][item]))
     return emp_dicts
@@ -137,11 +138,11 @@ minutes_list = create_minutes_list()
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():
-    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%Y-%m-%d"))), (minutes_list)))
-    sorted_list = sorted(my_list, key = lambda x : x[1])
+    sorted_list = sorted(minutes_list, key = lambda x : x[1])
+    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%Y-%m-%d"))), (sorted_list)))
     with open('./minutes.csv', 'w') as file:
         writer = csv.writer(file)
         writer.writerow(['Name', 'Date'])
-        for line in sorted_list:
+        for line in my_list:
             writer.writerow(line)
 write_sorted_list()

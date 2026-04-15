@@ -84,9 +84,10 @@ def employee_dict(row):
 # Task 9: A dict of dicts, for All Employees
 def all_employees_dict():
     emp_dicts = {}
-    for i in range(20):
-        emp_dicts[i+1] = employee_dict(employees['rows'][i])
-        print(tuple(emp_dicts[i+1]))
+    ind = column_index('employee_id')
+    id_list = list(employees['fields'][ind])
+    for item in id_list:
+        emp_dicts[item] = tuple(employee_dict(employees['rows'][item]))
     return emp_dicts
 
 # Task 10: Use the os Module
@@ -136,7 +137,7 @@ minutes_list = create_minutes_list()
 
 # Task 15: Write Out Sorted List
 def write_sorted_list():
-    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%B %d, %Y"))), (minutes_list)))
+    my_list = list(map(( lambda x: (x[0], datetime.strftime(x[1], "%Y-%m-%d"))), (minutes_list)))
     sorted_list = sorted(my_list, key = lambda x : x[1])
     with open('./minutes.csv', 'w') as file:
         writer = csv.writer(file)

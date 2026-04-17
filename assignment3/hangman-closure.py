@@ -1,16 +1,22 @@
 def make_hangman(secret_word):
     guesses = []
-    hang = str("_" * len(secret_word))
+    not_guessed = True
+    hang_list = list("_" * len(secret_word))
     def hangman_closure(letter):
         nonlocal guesses
+        nonlocal not_guessed
+        nonlocal hang_list
         guesses.append(letter)
-        if letter in secret_word:
-            hang[secret_word.find(letter)] = letter
-        print(hang)
-        if guesses in secret_word:
+        indices = [ind for ind, character in enumerate(secret_word) if character == letter]
+        for item in indices:
+            hang_list[item] = letter
+        print(str(hang_list))
+        if "".join(hang_list) == secret_word:
+            not_guessed = False
             return True
         else:
             return False
-    return hangman_closure(hangman_closure(input("Guess a letter: ")))
+    while not_guessed == True:
+        hangman_closure(input("Guess a letter: "))
 
 make_hangman(input("Pick a secret word: "))

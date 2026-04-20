@@ -4,49 +4,78 @@ class TictactoeException(Exception):
         super.__innit__()
 
 class Board():
-    valid_moves = ["upper left", "upper center", "upper right", "middle left", "center", "middle right", "lower left", "lower center", "lower right"]
     def __innit__(self):
-        self.board_array = [[" "," ", " "][" "," ", " "][" "," ", " "]]
+        space = " "
+        self.board_array = [(space * 3) **2]
         self.turn = "X"
+        valid_moves = ["upper left", "upper center", "upper right", "middle left", "center", "middle right", "lower left", "lower center", "lower right"]
     def __str__(self):
-        for item in self.board_array:
-            item = str(item + "\n")
-        print(self.board)
+        lines=[]
+        lines.append(f" {self.board_array[0][0]} | {self.board_array[0][1]} | {self.board_array[0][2]} \n")
+        lines.append("-----------\n")
+        lines.append(f" {self.board_array[1][0]} | {self.board_array[1][1]} | {self.board_array[1][2]} \n")
+        lines.append("-----------\n")
+        lines.append(f" {self.board_array[2][0]} | {self.board_array[2][1]} | {self.board_array[2][2]} \n")
+        return "".join(lines)
     def move(self, move_string):
-        def find_index(move_str):
-            if "left" in move_str:
-                first_ind = 0
-            if "center" in move_str:
-                first_ind = 1
-            else:
-                first_ind = 2
-            if "upper" in move_str:
-                second_ind = 0
-            elif "middle" in move_str:
-                second_ind = 1
-            else:
-                second_ind = 2
-            return [first_ind, second_ind]
-        move_index = find_index(move_string)
-        if move_string not in valid_moves:
-            raise TictactoeException ("That's not a valid move.")
-        elif self.board_array[move_index] != " " :
-            raise TictactoeException ("That spot is taken.")
+        if not move_string in Board.valid_moves:
+            raise TictactoeException("That's not a valid move.")
+        move_index = Board.valid_moves.index(move_string)
+        row = move_index // 3 # row
+        column = move_index % 3 #column
+        if self.board_array[row][column] != " ":
+            raise TictactoeException("That spot is taken.")
+        self.board_array[row][column] = self.turn
+        if self.turn == "X":
+            self.turn = "O"
         else:
-            if self.turn == "X":
-                self.board_array[move_index] = "X"
-                self.turn = "O"
-            else:
-                self.board_array[move_index] = "O"
-                self.turn = "X"
+            self.turn = "X"   
     def whats_next(self):
-        def check_rows(xo):
-            for row in self.board_array:
-                if row[0] == xo and row[1] == xo and row[2] == xo:
-                    return True
-        def check_columns(xo):
+        cat = True
+        for i in range(3):
+            for j in range(3):
+                if self.board_array[i][j] == " ":
+                    cat = False
+                else:
+                    continue
+                break
+            else:
+                continue
+            break
+        if (cat):
+            return (True, "Cat's Game.")
+        win = False
+        for i in range(3): # check rows
+            if self.board_array[i][0] != " ":
+                if self.board_array[i][0] == self.board_array[i][1] and self.board_array[i][1] == self.board_array[i][2]:
+                    win = True
+                    break
+        if not win:
+            for i in range(3): # check columns
+                if self.board_array[0][i] != " ":
+                    if self.board_array[0][i] == self.board_array[1][i] and self.board_array[1][i] == self.board_array[2][i]:
+                        win = True
+                        break
+        if not win:
+            if self.board_array[1][1] != " ": # check diagonals
+                if self.board_array[0][0] ==  self.board_array[1][1] and self.board_array[2][2] == self.board_array[1][1]:
+                    win = True
+                if self.board_array[0][2] ==  self.board_array[1][1] and self.board_array[2][0] == self.board_array[1][1]:
+                    win = True
+        if not win:
+            if self.turn == "X": 
+                return (False, "X's turn.")
+            else:
+                return (False, "O's turn.")
+        else:
+            if self.turn == "O":
+                return (True, "X wins!")
+            else:
+                return (True, "O wins!")
 
-        def check_diagonal(xo):
-            for i in range(3):
-                if self.board_array[i][i] == xo or self.board_array[-i][i] ==xo:
-                    return True
+try:
+    game1 = Board()
+    while game1.whats_next() == False:
+        input("Next move ")
+except Exception as e:
+    print(e)

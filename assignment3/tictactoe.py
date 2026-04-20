@@ -4,7 +4,7 @@ class TictactoeException(Exception):
         super.__innit__()
 
 class Board():
-    def __innit__(self):
+    def __init__(self):
         space = " "
         self.board_array = [(space * 3) **2]
         self.turn = "X"

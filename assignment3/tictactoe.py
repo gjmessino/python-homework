@@ -28,6 +28,8 @@ class Board():
             self.turn = "O"
         else:
             self.turn = "X"
+        for rows in self.board_array:
+            print(rows)
     def whats_next(self):
         cat = True
         for i in range(3):
@@ -78,5 +80,6 @@ try:
         print(f"It's {game1.turn}'s turn")
         m = input("Next move ")
         game1.move(m)
+        bool, score = game1.whats_next()
 except Exception as e:
     print(e)

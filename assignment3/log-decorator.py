@@ -1,13 +1,15 @@
 import logging
+logger = logging.getLogger(__name__ + "_parameter_log")
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler("./decorator.log", "a")
+logger.addHandler(handler)
+logger.log(logging.INFO, "this string would be logged")
 
 def logger_decorator(func):
-    logger = logging.getLogger(__name__ + "_parameter_log")
-    logger.setLevel(logging.INFO)
-    logger.addHandler(logging.FileHandler("./decorator.log","a"))
-    logger.log(logging.INFO, "this string would be logged")
     def wrapper_decorator(*args, **kwargs):
         value = func(*args, **kwargs)
-        logger.log(logging.INFO, func.__name__, *args, **kwargs, value)
+        message = f"{func.__name__} \n {value}"
+        logger.info(message)
 
 @logger_decorator
 def hello_world():
@@ -15,7 +17,11 @@ def hello_world():
 
 @logger_decorator
 def my_second_function(*args, **kwargs):
-    return logger_decorator()
+    return True
+
+@logger_decorator
+def third_func(**kwargs):
+    return logger_decorator
 
 logger_decorator()
 hello_world()

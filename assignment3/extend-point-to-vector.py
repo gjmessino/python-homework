@@ -22,3 +22,15 @@ class Vector(Point):
         new_y = self.y + alter.y
         new_vec = Vector(new_x, new_y)
         return new_vec
+
+point1 = 5,6
+point2 = 8,1
+vec1 = 4,7
+vec2 = 10,20
+
+a = point1.__eq__((4,5))
+b = point2.__str__()
+c = vec1.__add__((8,3))
+d = vec2.__str__()
+
+print(a,b,c,d)

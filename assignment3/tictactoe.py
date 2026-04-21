@@ -1,7 +1,7 @@
 class TictactoeException(Exception):
     def __init__(self, message):
         self.message = message
-        super().init(message)
+        super().__init__(message)
 class Board():
     valid_moves = ["upper left", "upper center", "upper right", "middle left", "center", "middle right", "lower left", "lower center", "lower right"]
     def __init__(self):
@@ -75,6 +75,7 @@ try:
     game1 = Board()
     bool, score = game1.whats_next()
     while bool == False:
+        print(f"It's {game1.turn}'s turn")
         m = input("Next move ")
         game1.move(m)
 except Exception as e:

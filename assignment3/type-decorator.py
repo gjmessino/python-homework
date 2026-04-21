@@ -11,6 +11,7 @@ def type_converter(type_of_output):
                     return float(x)
             except Exception as e:
                 print(e)
+        return wrapper()
 
 @type_converter(str)
 def return_int():

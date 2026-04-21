@@ -1,20 +1,18 @@
 def make_hangman(secret_word):
+    guesses = []
+    word_list = list("_" * len(secret_word))
     def hangman_closure(letter):
-        guesses = []
-        hang_list = list("_" * len(secret_word))
         guesses.append(letter)
-        print("".join(hang_list))
-        indices = [ind for ind, character in enumerate(secret_word) if character == letter]
-        for item in indices:
-            hang_list[item] = letter
-        if "".join(hang_list) == secret_word:
+        print("".join(word_list))
+        if "".join(word_list) == secret_word:
             return True
         else:
             return False
-    return hangman_closure()
+    return hangman_closure
 
-secret1 = input("Pick a secret word: ")
-x = True
-while x == True:
-    guessed_let = input("Guess a letter ")
-    secret1(guessed_let)
+secret = input("What's the secret word? ")
+game1 = make_hangman(secret)
+lett = input("Guess a letter: ")
+while game1(lett) == False:
+    lett = input("Guess a letter: ")
+    game1(lett)

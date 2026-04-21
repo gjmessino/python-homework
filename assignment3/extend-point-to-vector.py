@@ -16,21 +16,24 @@ class Vector(Point):
     def __init__(self, x, y):
         super().__init__(x, y)
     def __str__(self):
-        return f"{self.x} & {self.y}"
+        return f"x: {self.x} & y: {self.y}"
     def __add__(self,alter):
         new_x = self.x + alter.x
         new_y = self.y + alter.y
         new_vec = Vector(new_x, new_y)
         return new_vec
 
-point1 = 5,6
-point2 = 8,1
-vec1 = 4,7
-vec2 = 10,20
+point1 = Point(5,6)
+point2 = Point(8,1)
+vec1 = Vector(4,7)
+vec2 = Vector(10,20)
 
-a = point1.__eq__((4,5))
+a = point1.__eq__(point2)
 b = point2.__str__()
-c = vec1.__add__((8,3))
+c = vec1.__add__(vec2)
 d = vec2.__str__()
 
-print(a,b,c,d)
+print(a)
+print(b)
+print(c)
+print(d)

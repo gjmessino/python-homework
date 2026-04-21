@@ -1,12 +1,12 @@
 class TictactoeException(Exception):
-    def __innit__(self, message):
+    def __init__(self, message):
         self.message = message
-        super.__innit__()
+        super.__init__()
 
 class Board():
     def __init__(self):
         space = " "
-        self.board_array = [(space * 3) **2]
+        self.board_array = [[" ", " ", " "],[" ", " ", " "],[" ", " ", " "]]
         self.turn = "X"
         valid_moves = ["upper left", "upper center", "upper right", "middle left", "center", "middle right", "lower left", "lower center", "lower right"]
     def __str__(self):
@@ -29,7 +29,7 @@ class Board():
         if self.turn == "X":
             self.turn = "O"
         else:
-            self.turn = "X"   
+            self.turn = "X"
     def whats_next(self):
         cat = True
         for i in range(3):
@@ -75,7 +75,8 @@ class Board():
 
 try:
     game1 = Board()
-    while game1.whats_next() == False:
+    bool, score = game1.whats_next()
+    while bool == False:
         input("Next move ")
 except Exception as e:
     print(e)

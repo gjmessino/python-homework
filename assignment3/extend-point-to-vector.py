@@ -20,5 +20,5 @@ class Vector(Point):
     def __add__(self,alter):
         new_x = self.x + alter.x
         new_y = self.y + alter.y
-        new_vec = Vector([new_x, new_y])
+        new_vec = Vector(new_x, new_y)
         return new_vec

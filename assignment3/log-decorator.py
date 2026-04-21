@@ -1,11 +1,11 @@
 import logging
 
-def logger_decorator(*args, **kwargs):
+def logger_decorator(func):
     logger = logging.getLogger(__name__ + "_parameter_log")
     logger.setLevel(logging.INFO)
     logger.addHandler(logging.FileHandler("./decorator.log","a"))
     logger.log(logging.INFO, "this string would be logged")
-    def wrapper_decorator(func):
+    def wrapper_decorator(*args, **kwargs):
         value = func(*args, **kwargs)
         logger.log(logging.INFO, func.__name__, *args, **kwargs, value)
 

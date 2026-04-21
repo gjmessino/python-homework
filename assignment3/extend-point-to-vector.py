@@ -15,5 +15,7 @@ class Vector(Point):
         super().__init__(x, y)
     def __str__(self):
         return f"{self.x} & {self.y}"
-    def __add__(self):
-        return self.x + self.y
+    def __add__(self,alter):
+        new_x = self.x + alter.x
+        new_y = self.y + alter.y
+        return [new_x, new_y]

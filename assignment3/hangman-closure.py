@@ -3,7 +3,11 @@ def make_hangman(secret_word):
     word_list = list("_" * len(secret_word))
     def hangman_closure(letter):
         guesses.append(letter)
-        print("".join(word_list))
+        if letter in secret_word:
+            indices = [ind for ind, character in enumerate(secret_word) if character == letter]
+            for item in indices:
+                word_list[item] = letter
+            print("".join(word_list))
         if "".join(word_list) == secret_word:
             return True
         else:

@@ -9,9 +9,10 @@ def logger_decorator(func):
     def wrapper_decorator(*args, **kwargs):
         pos_params = list(args)
         key_params = list(kwargs)
-        value = func(pos_params, key_params)
+        value = func(*args, *kwargs)
         message = f"{func.__name__} \n {pos_params}{key_params} \n {value}"
         logger.info(message)
+    return wrapper_decorator
 
 @logger_decorator
 def hello_world():

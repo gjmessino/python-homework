@@ -19,7 +19,7 @@ task1_older['Age'] +=1
 print('Incriment Age')
 print(task1_older)
 
-task1_older.to_csv('assignment4/employees.csv', index=False)
+task1_older.to_csv('employees.csv', index=False)
 
 # Task 2: Loading Data from CSV and JSON
 task2_employees = pd.read_csv('employees.csv')
@@ -28,10 +28,10 @@ print(task2_employees)
 
 task2_data = ({'Name' : ['Eve', 'Frank'],
                'Age' : ['28', '40'],
-               'City' : ['Miami', 'Seatle'],
+               'City' : ['Miami', 'Seattle'],
                'Salary' : ['60000', '95000']})
 json_employees = pd.DataFrame(task2_data)
-json_employees.to_json('assignment4/additional_employees.json', index = False)
+json_employees.to_json('additional_employees.json', index = False)
 
 more_employees = pd.concat ([task2_employees, json_employees], ignore_index=True)
 print('Task 2 Data')
@@ -84,8 +84,8 @@ clean_data['Salary'] = clean_data['Salary'].fillna(clean_data['Salary'].median()
 
 clean_data['Hire Date'] = pd.to_datetime(clean_data['Hire Date'], errors='coerce')
 
-clean_data['Name'] = clean_data['Name'].str.strip()
-clean_data['Department'] = clean_data['Department'].str.strip()
+clean_data['Name'] = clean_data['Name'].str.upper()
+clean_data['Department'] = clean_data['Department'].str.upper()
 
 print("Final Data")
 print(clean_data)

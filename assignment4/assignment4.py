@@ -35,3 +35,25 @@ json_employees.to_json('additional_employees.json', index = False)
 more_employees = pd.concat ([task2_employees, json_employees], ignore_index=True)
 print('Task 2 Data')
 print(more_employees)
+
+# Task 3: Data Inspection - Using Head, Tail, and Info Methods
+print('Head')
+more_employees.head()
+
+first_three = more_employees.iloc[0:3]
+print('First Three')
+print(first_three)
+
+print('Tail')
+print(more_employees.tail())
+
+print('Last Two')
+last_two = more_employees.iloc[3:]
+print(last_two)
+
+employee_shape = more_employees.shape
+print('Shape')
+print(employee_shape)
+
+print('Info')
+more_employees.info()

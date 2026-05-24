@@ -21,8 +21,8 @@ except Exception as e:
 finally:
     driver.quit()
 
-#Find all book results
-book_list = driver.find_element(By.CSS_SELECTOR, 'li.row cp-search-result-item')
+#Task 3
+book_list = driver.find_element(By.XPATH, '//li@row cp-search-results-item')
 results = []
 
 #iterate through books
@@ -39,5 +39,9 @@ if (book_list):
         results.append(dict_entry)
 
 df = pd.DataFrame(results)
+
+#Task 4
+df.to_csv('./get_books.csv')
+results.to_json('./get_books.json')
 
 driver.quit()

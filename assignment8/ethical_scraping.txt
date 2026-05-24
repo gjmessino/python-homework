@@ -1,0 +1,16 @@
+1. Which sections of the website are restricted for crawling?
+
+Disallowed sections of the website include parts for editors and administrators
+as well many notice boards, policies about abuse, and their blacklist. It's
+really anything having to do with running the site.
+
+2. Are there specific rules for certain user agents?
+
+Yes. Certain agents aren't allowed all together, usually for ignoring robot.txt.
+
+3. Reflect on why websites use robots.txt and write 2-3 sentences explaining
+its purpose and how it promotes ethical scraping.
+
+Many of the rules reflect on not over loading the system, which several of
+the disallowed bots have done. The robot.txt keeps wikipedia functioning
+so anyone can scrape the site and/or use the site.

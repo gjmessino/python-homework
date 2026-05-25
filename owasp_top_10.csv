@@ -1,0 +1,11 @@
+,0
+0,A01:2025 - Broken Access Control
+1,A02:2025 - Security Misconfiguration
+2,A03:2025 - Software Supply Chain Failures
+3,A04:2025 - Cryptographic Failures
+4,A05:2025 - Injection
+5,A06:2025 - Insecure Design
+6,A07:2025 - Authentication Failures
+7,A08:2025 - Software or Data Integrity Failures
+8,A09:2025 - Security Logging and Alerting Failures
+9,A10:2025 - Mishandling of Exceptional Conditions

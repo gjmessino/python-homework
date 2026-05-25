@@ -9,11 +9,18 @@ from selenium.webdriver.common.by import By
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
 try:
-    driver.get('https://owasp.org/www-project-top-ten/')
-    ... # extract data
+    driver.get('https://owasp.org/Top10/2025/')
     sleep(2) # wait 2 seconds
-    driver.get('https://owasp.org/www-project-top-ten/')
+    driver.get('https://owasp.org/Top10/2025/')
 except Exception as e:
     print(f"An exception occurred: {type(e).__name__} {e}")
-finally:
-    driver.quit()
+
+vuls = driver.find_elements(By.XPATH, '//ol/li')
+results = []
+for items in vuls:
+    print(items.text)
+    results.append(items.text)
+
+df = pd.DataFrame(results)
+
+df.to_csv('./owasp_top_10.csv')

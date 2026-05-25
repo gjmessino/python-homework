@@ -13,17 +13,13 @@ driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install())
 # Letting driver get webpage
 try:
     driver.get('https://durhamcounty.bibliocommons.com/v2/search?query=learning%20spanish&searchType=smart')
-    ... # extract data
     sleep(2) # wait 2 seconds
     driver.get('https://durhamcounty.bibliocommons.com/v2/search?query=learning%20spanish&searchType=smart')
 except Exception as e:
     print(f"An exception occurred: {type(e).__name__} {e}")
-finally:
-    driver.quit()
 
 #Task 3
 book_list = driver.find_elements(By.CSS_SELECTOR, 'li.cp-search-results-item')
-print(book_list)
 results = []
 
 #iterate through books
@@ -43,6 +39,6 @@ df = pd.DataFrame(results)
 
 #Task 4
 df.to_csv('./get_books.csv')
-results.to_json('./get_books.json')
+df.to_json('get_books.json', orient='records', indent=2)
 
 driver.quit()

@@ -22,7 +22,8 @@ finally:
     driver.quit()
 
 #Task 3
-book_list = driver.find_element(By.XPATH, '//li@row cp-search-results-item')
+book_list = driver.find_elements(By.CSS_SELECTOR, 'li.cp-search-results-item')
+print(book_list)
 results = []
 
 #iterate through books

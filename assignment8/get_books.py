@@ -36,7 +36,8 @@ for entry in li_lists:
 df = pd.DataFrame(results)
 print(df)
 
-df.to_csv('./get_books.csv')
-json.dump(results, './get_books.json')
+df.to_csv('assignment8/get_books.csv')
+with open('assignment8/get_books.json', 'w') as f:
+    json.dump(results, f, ensure_ascii=False, indent=2)
 
 driver.quit()

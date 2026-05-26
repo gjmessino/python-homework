@@ -31,6 +31,6 @@ for items in vuls:
     results.append(my_dict)
 
 df = pd.DataFrame(results)
-df.to_csv('./owasp_top_10.csv')
+df.to_csv('assignment8/owasp_top_10.csv')
 
 driver.quit()

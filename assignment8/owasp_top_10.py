@@ -23,8 +23,14 @@ driver.get(url)
 vuls = driver.find_elements(By.XPATH, '//ol/li')
 results = []
 for items in vuls:
-    results.append(items.text)
+    title = items.text
+    a_select = items.find_element(By.CSS_SELECTOR, 'a')
+    link = a_select.get_attribute('href')
+    my_dict = {"Title" : title,
+               "Link": link}
+    results.append(my_dict)
 
 df = pd.DataFrame(results)
+df.to_csv('./owasp_top_10.csv')
 
-df.to_csv('../owasp_top_10.csv')
+driver.quit()

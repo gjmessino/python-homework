@@ -26,7 +26,7 @@ for entry in li_lists:
     author_entry = entry.find_elements(By.CSS_SELECTOR, 'a.author-link')
     for auth in author_entry:
         author_list.append(auth.text)
-    author = " ;".join(author_list)
+    author = ";".join(author_list)
     year = entry.find_element(By.CSS_SELECTOR, 'span.display-info-primary')
     dict_entry = {'Title' : title.text,
                   'Author' : author,
@@ -37,6 +37,6 @@ df = pd.DataFrame(results)
 print(df)
 
 df.to_csv('./get_books.csv')
-df.to_json('./get_books.json')
+json.dump(results, './get_books.json')
 
 driver.quit()

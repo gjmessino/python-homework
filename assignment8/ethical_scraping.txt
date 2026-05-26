@@ -1,3 +1,7 @@
+Task 1
+Everything we are doing complies with the robot.txt
+
+Task 5
 1. Which sections of the website are restricted for crawling?
 
 Disallowed sections of the website include parts for editors and administrators

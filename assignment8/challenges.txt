@@ -1,0 +1,3 @@
+This week was particularly difficult for me. I had a lot of trouble
+with understanding the syntax in selenium. I asked Gemini for a lot
+of explanations. Eventually things clicked together.

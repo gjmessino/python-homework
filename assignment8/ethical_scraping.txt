@@ -2,7 +2,11 @@
 
 Disallowed sections of the website include parts for editors and administrators
 as well many notice boards, policies about abuse, and their blacklist. It's
-really anything having to do with running the site.
+really anything having to do with running the site. Sections include but are 
+not limited to:
+/wiki/Wikipedia:Articles_for_deletion/
+ /wiki/MediaWiki:Spam-blacklist
+ /wiki/Special:
 
 2. Are there specific rules for certain user agents?
 

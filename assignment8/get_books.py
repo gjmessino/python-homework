@@ -39,3 +39,5 @@ df = pd.DataFame(results)
 
 df.to_csv('../get_books.csv')
 df.to_json('../get_books.json')
+
+driver.quit()

@@ -26,4 +26,4 @@ try:
         df_group.to_csv('./order_summary.csv')
 
 except sqlite3.Error as e:
-    print(f"An error occurred:")
+    print(f'An error occurred: {e}')

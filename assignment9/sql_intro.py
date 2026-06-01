@@ -4,7 +4,7 @@ import sqlite3
 ## Task 3 Functions
 def add_publisher(cursor, name):
     try:
-        cursor.execute("INSERT INTO publishers (name_pub) VALUES (?)", (name))
+        cursor.execute("INSERT INTO publishers (name_pub) VALUES (?)", (name,))
     except sqlite3.IntegrityError:
         print(f"{name} is already in the database.")
 def add_magazine(cursor, name, pub):
@@ -32,7 +32,7 @@ try:
         conn.execute("PRAGMA foreign_keys = 1") # This turns on the foreign key constraint
         cursor.execute("""
                     CREATE TABLE IF NOT EXISTS publishers (
-                    name_pub TEXT PRIMARY KEY,
+                    name_pub TEXT PRIMARY KEY
                     )   
                     """)
         cursor.execute("""
@@ -45,7 +45,7 @@ try:
         cursor.execute("""
                     CREATE TABLE IF NOT EXISTS subscribers (
                     name_subscriber TEXT,
-                    address TEXT NOT NULL
+                    address TEXT NOT NULL,
                     CONSTRAINT name_address UNIQUE (name_subscriber, address)
 
                     )
@@ -68,7 +68,7 @@ try:
         add_magazine(cursor, 'Vogue', 'Conde Naste')
         add_magazine(cursor, 'Cosmopolitan', 'Hearst')
         add_magazine(cursor, 'Elle', 'Hearst')
-        add_magazine(cursor, 'Womens Health', 'Hearst')
+        add_magazine(cursor, 'People', 'Dotdash Meredith')
 
         add_subscriber(cursor, 'Alice', '123 Apple St.')
         add_subscriber(cursor, 'Greg', '456 Banana Ave.')
@@ -78,7 +78,7 @@ try:
         add_subscription(cursor, '01/11/28', 'Vogue', 'Alice')
         add_subscription(cursor, '12/14/30', 'Elle', 'Alice')
         add_subscription(cursor, '11/4/31', 'People', 'Michael')
-        add_subscription(cursor, '04/21/28', 'Womens Health', 'Greg')
+        add_subscription(cursor, '04/21/28', 'Cosmopolitan', 'Greg')
         conn.commit() 
 
     ## Task 4

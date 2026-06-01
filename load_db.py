@@ -10,7 +10,7 @@ if os.path.exists(db_path):
         exit(0)
     os.remove(db_path)
 
-with sqlite3.connect("./db/lesson.db",isolation_level='IMMEDIATE') as conn:    
+with sqlite3.connect("../db/lesson.db",isolation_level='IMMEDIATE') as conn:    
     conn = sqlite3.connect("./db/lesson.db",isolation_level='IMMEDIATE')
     conn.execute("PRAGMA foreign_keys = 1")
     cursor = conn.cursor()

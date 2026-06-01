@@ -17,9 +17,9 @@ def add_subscriber(cursor, name, address):
         cursor.execute("INSERT INTO subscribers (name_subscriber, address) VALUES (?,?)", (name, address))
     except sqlite3.IntegrityError:
         print(f"{name} is already in the database.")
-def add_subscription(cursor, expiration, mag, subscriber):
+def add_subscription(cursor, expiration, mag, subscriber, address):
     try:
-        cursor.execute("INSERT INTO subscriptions (expiration, name_mag, name_subscriber) VALUES (?,?,?)", (expiration, mag, subscriber))
+        cursor.execute("INSERT INTO subscriptions (expiration, name_mag, name_subscriber, address) VALUES (?,?,?,?)", (expiration, mag, subscriber, address))
     except sqlite3.IntegrityError:
         print("Subsciption is already in the database.")
 
@@ -44,19 +44,19 @@ try:
                     """)
         cursor.execute("""
                     CREATE TABLE IF NOT EXISTS subscribers (
-                    name_subscriber TEXT,
+                    name_subscriber TEXT NOT NULL,
                     address TEXT NOT NULL,
-                    CONSTRAINT name_address UNIQUE (name_subscriber, address)
-
+                    PRIMARY KEY (name_subscriber, address)
                     )
                     """)
         cursor.execute("""
                     CREATE TABLE IF NOT EXISTS subscriptions (
                     expiration TEXT NOT NULL,
                     name_mag TEXT NOT NULL,
-                    name_subscriber TEXT NOT NULL,
+                    name_subscriber NOT NULL,
+                    address TEXT NOT NULL,
                     FOREIGN KEY (name_mag) REFERENCES magazines (name_mag),
-                    FOREIGN KEY (name_subscriber) REFERENCES subscribers (name_subscriber)
+                    FOREIGN KEY (name_subscriber, address) REFERENCES subscribers (name_subscriber, address)
                     )""")
         
     ##Task 3
@@ -75,10 +75,10 @@ try:
         add_subscriber(cursor, 'Amanda', '789 Cherry Way')
         add_subscriber(cursor, 'Michael', '1011 Durian Lane')
     
-        add_subscription(cursor, '01/11/28', 'Vogue', 'Alice')
-        add_subscription(cursor, '12/14/30', 'Elle', 'Alice')
-        add_subscription(cursor, '11/4/31', 'People', 'Michael')
-        add_subscription(cursor, '04/21/28', 'Cosmopolitan', 'Greg')
+        add_subscription(cursor, '01/11/28', 'Vogue', 'Alice', '123 Apple St.')
+        add_subscription(cursor, '12/14/30', 'Elle', 'Alice', '123 Apple St.')
+        add_subscription(cursor, '11/4/31', 'People', 'Michael', '1011 Durian Lane')
+        add_subscription(cursor, '04/21/28', 'Cosmopolitan', 'Greg', '456 Banana Ave.')
         conn.commit() 
 
     ## Task 4

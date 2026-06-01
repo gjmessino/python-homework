@@ -4,22 +4,22 @@ import sqlite3
 ## Task 3 Functions
 def add_publisher(cursor, name, mag):
     try:
-        cursor.execute("INSERT INTO publishers (name_pub, name_mag) VALUES (?,?,?)", (name, mag))
+        cursor.execute("INSERT INTO publishers (name_pub, name_mag) VALUES (?,?)", (name, mag))
     except sqlite3.IntegrityError:
         print(f"{name} is already in the database.")
 def add_magazine(cursor, name, pub):
     try:
-        cursor.execute("INSERT INTO magazine (name_mag, name_pub) VALUES (?,?,?)", (name, pub))
+        cursor.execute("INSERT INTO magazines (name_mag, name_pub) VALUES (?,?)", (name, pub))
     except sqlite3.IntegrityError:
         print(f"{name} is already in the database.")
 def add_subscriber(cursor, name, address):
     try:
-        cursor.execute("INSERT INTO subscribers (name_subscriber, address) VALUES (?,?,?)", (name, address))
+        cursor.execute("INSERT INTO subscribers (name_subscriber, address) VALUES (?,?)", (name, address))
     except sqlite3.IntegrityError:
         print(f"{name} is already in the database.")
 def add_subscription(cursor, expiration, mag, subscriber):
     try:
-        cursor.execute("INSERT INTO subscritopns (expiration, name_mag, name_mag, name_subscriber) VALUES (?,?,?)", (expiration, mag, subscriber))
+        cursor.execute("INSERT INTO subscriptions (expiration, name_mag, name_subscriber) VALUES (?,?,?)", (expiration, mag, subscriber))
     except sqlite3.IntegrityError:
         print("Subsciption is already in the database.")
 
@@ -32,8 +32,8 @@ except sqlite3.Error as e:
 
 ## Task 2
 with sqlite3.connect("../db/magazines.db") as conn:
-    conn.execute("PRAGMA foreign_keys = 1") # This turns on the foreign key constraint
     cursor = conn.cursor()
+    conn.execute("PRAGMA foreign_keys = 1") # This turns on the foreign key constraint
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS publishers (
                     name_pub TEXT PRIMARY KEY,

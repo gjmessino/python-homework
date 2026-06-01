@@ -53,7 +53,7 @@ try:
                     CREATE TABLE IF NOT EXISTS subscriptions (
                     expiration TEXT NOT NULL,
                     name_mag TEXT NOT NULL,
-                    name_subscriber NOT NULL,
+                    name_subscriber TEXT NOT NULL,
                     address TEXT NOT NULL,
                     FOREIGN KEY (name_mag) REFERENCES magazines (name_mag),
                     FOREIGN KEY (name_subscriber, address) REFERENCES subscribers (name_subscriber, address)

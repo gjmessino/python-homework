@@ -36,27 +36,30 @@ with sqlite3.connect("../db/magazines.db") as conn:
     conn.execute("PRAGMA foreign_keys = 1") # This turns on the foreign key constraint
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS publishers (
-                    name_pub TEXT PRIMARY KEY,
-                    name_mag TEXT NOT NULL
+                   name_pub TEXT PRIMARY KEY,
+                   name_mag TEXT NOT NULL
                    )   
                    """)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS magazines (
                    name_mag TEXT PRIMARY KEY,
-                   name_pub TEXT NOT NULL
+                   name_pub TEXT NOT NULL,
+                   FOREIGN KEY (name_pub) REFERENCES publishers (name_pub)
                    )
                    """)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS subscribers (
                    name_subscriber TEXT PRIMARY KEY,
-                   address TEXT
+                   address TEXT NOT NULL
                    )
                    """)
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS subscriptions (
                    expiration TEXT NOT NULL,
                    name_mag TEXT NOT NULL,
-                   name_subscriber TEXT NOT NULL
+                   name_subscriber TEXT NOT NULL,
+                   FOREIGN KEY (name_mag) REFERENCES magazines (name_mag),
+                   FOREIGN KEY (name_subscriber) REFERENCES subscribers (name_subscriber)
                    )""")
     
 ##Task 3
@@ -93,7 +96,11 @@ with sqlite3.connect("../db/magazines.db") as conn:
     for row in result:
         print(row)
     
-    cursor.execute("SELECT p.name_pub, m.name_mag From publishers p JOIN magazines m on p.name_pub = m.name_pub")
+    cursor.execute("""SELECT p.name_pub, m.name_mag 
+                   From publishers p 
+                   JOIN magazines m 
+                   ON p.name_pub = m.name_pub 
+                   WHERE p.name_pub='Hearst'""")
     result = cursor.fetchall()
     for row in result:
         print(row)

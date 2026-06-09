@@ -78,7 +78,7 @@ try:
                 JOIN products p ON l.product_id = p.product_id
                 WHERE l.order_id = ?
                 """)
-        cursor.execute(sql6,(new_order_id))
+        cursor.execute(sql6,(new_order_id,))
         results = cursor.fetchall()
         for row in results:
               print(row)
@@ -87,7 +87,7 @@ try:
 
 # Task 4
         sql_statement3 = ("""
-                          SELECT e.first_name, e.last_name, e.employee_id
+                          SELECT e.first_name, e.last_name, e.employee_id,
                           COUNT(o.order_id) AS order_count
                           FROM employees e      
                           JOIN orders o ON e.employee_id=o.employee_id

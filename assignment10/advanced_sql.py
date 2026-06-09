@@ -16,6 +16,7 @@ try:
         cursor.execute(sql_statement)
         results = cursor.fetchall()
         print(results)
+        conn.commit()
 
 ## Task 2
         sql_statement2 =("""
@@ -37,6 +38,7 @@ try:
         results = cursor.fetchall()
         for row in results:
             print(row)
+        conn.commit()
 
 ## Task 3
         order = []
@@ -62,28 +64,30 @@ try:
         conn.execute('PRAGMA foreign_keys = 1')
         sql4 = ("""INSERT INTO orders (customer_id, employee_id, date) VALUES (?, ?, '2026-06-08') RETURNING order_id""")
         cursor.execute(sql4, (cust_id, emp_id))
-        order_id = cursor.fetchone()[0]
+        new_order_id = cursor.fetchone()[0]
 
         conn.execute('PRAGMA foreign_keys = 1')
         sql5 = ("""INSERT INTO line_items (order_id, product_id, quantity) VALUES (?, ?, 10)""")
         for row in rows:
              prod_id = row[0]
-             cursor.execute(sql5, (order_id, prod_id))
-        
+             cursor.execute(sql5, (new_order_id, prod_id))
+             
         sql6 = ("""
-                SELECT l.line_item_id, p.product_name
+                SELECT l.line_item_id, l.quantity, p.product_name
                 FROM line_items l
                 JOIN products p ON l.product_id = p.product_id
-                ORDER BY p.price ASC
-                LIMIT 5
+                WHERE l.order_id = ?
                 """)
-        cursor.execute(sql6)
+        cursor.execute(sql6,(new_order_id))
         results = cursor.fetchall()
-        print(results)
+        for row in results:
+              print(row)
+        
+        conn.commit()
 
 # Task 4
         sql_statement3 = ("""
-                          SELECT e.first_name, e.last_name,
+                          SELECT e.first_name, e.last_name, e.employee_id
                           COUNT(o.order_id) AS order_count
                           FROM employees e      
                           JOIN orders o ON e.employee_id=o.employee_id
@@ -94,7 +98,7 @@ try:
         results = cursor.fetchall()
         print(results)
 
-#         conn.commit()
+        conn.commit()
 except Exception as e:
         conn.rollback()
         print(f'An error occurred: {e}')
